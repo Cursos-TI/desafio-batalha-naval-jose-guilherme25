@@ -1,0 +1,17 @@
+for (pos_horizontal = 3; pos_horizontal < 6; pos_horizontal++) {
+        tabuleiro[0][pos_horizontal] = representar_navios;
+    }
+
+    // Navio Vertical
+    for (pos_vertical = 3; pos_vertical < 6; pos_vertical++) {
+        tabuleiro[pos_vertical][9] = representar_navios;
+    }
+
+    // Navio Diagonais
+    for (pos_diagonal_1 = 0; pos_diagonal_1 < 3; pos_diagonal_1++){
+        tabuleiro[pos_diagonal_1][pos_diagonal_1] = representar_navios;
+    }
+
+    for (pos_diagonal_2 = 7; pos_diagonal_2 <= 9; pos_diagonal_2++) {
+        tabuleiro[pos_diagonal_2][11-pos_diagonal_2] = representar_navios;
+    }

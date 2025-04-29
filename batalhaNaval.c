@@ -1,8 +1,9 @@
 #include <stdio.h>
 
 // Desafio Batalha Naval - MateCheck
-// Este código inicial serve como base para o desenvolvimento do sistema de Batalha Naval.
-// Siga os comentários para implementar cada parte do desafio.
+// Nível Novato - Posicionamento dos Navios
+// Nível Aventureiro - Expansão do Tabuleiro e Posicionamento Diagonal
+// Nível Mestre - Habilidades Especiais com Matrizes
 
 // Criando constantes para representar linhas, colunas e o tamanho maximo dos navios (3 casas)
 #define LINHAS_TABULEIRO 10
@@ -10,8 +11,6 @@
 #define TAM_MAX_NAVIO 3
 
 int main() {
-    // Nível Novato - Posicionamento dos Navios
-    // Nível Aventureiro - Expansão do Tabuleiro e Posicionamento Diagonal
     // Declarando Matriz e Vetor (Tabuleiro e Coluna)
     int tabuleiro[LINHAS_TABULEIRO][COLUNAS_TABULEIRO];
     char letras_colunas[10] = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J'};
@@ -20,9 +19,9 @@ int main() {
     int representar_navios = 3;
 
     // Possiveis posições dos navios
-    int pos_vertical, pos_horizontal, pos_diagonal;
+    int pos_vertical = 3, pos_horizontal = 3, pos_diagonal_1 = 0, pos_diagonal_2 = 7;
 
-    // Sugestão: Posicione dois navios no tabuleiro, um verticalmente e outro horizontalmente.
+    // Titulo
     printf("-------------------------\n");
     printf(" TABULEIRO BATALHA NAVAL\n");
     printf("-------------------------\n");
@@ -35,24 +34,66 @@ int main() {
         }
     }
 
-    // Navio Horizontal
-    for (pos_horizontal = 1; pos_horizontal < 4; pos_horizontal++) {
-        tabuleiro[4][pos_horizontal] = representar_navios;
+    // Posições dos Navios (Horizontal/Vertical/Diagonal)
+    for (int i = 0; i < LINHAS_TABULEIRO; i++) {
+        for (int j = 0; j < COLUNAS_TABULEIRO; j++) {
+            if (pos_horizontal < 6) {
+                tabuleiro[0][pos_horizontal] = representar_navios;
+                pos_horizontal++;
+            } else if (pos_vertical < 6) {
+                tabuleiro[pos_vertical][9] = representar_navios;
+                pos_vertical++;
+            } else if (pos_diagonal_1 < 3) {
+                tabuleiro[pos_diagonal_1][pos_diagonal_1] = representar_navios;
+                pos_diagonal_1++;
+            } else if (pos_diagonal_2 <= 9) {
+                tabuleiro[pos_diagonal_2][11-pos_diagonal_2] = representar_navios;
+                pos_diagonal_2++;
+            }
+        }
     }
 
-    // Navio Vertical
-    for (pos_vertical = 4; pos_vertical < 7; pos_vertical++) {
-        tabuleiro[pos_vertical][8] = representar_navios;
+    // Adicionando habilidades no tabuleiro
+    // Cone
+    for (int i = 0; i < LINHAS_TABULEIRO; i++) {
+        for (int j = 0; j < COLUNAS_TABULEIRO; j++) {
+            if (i == 6 && j == 7) {
+                tabuleiro[i][j] = 1;
+            } else if (i == 7 && j >= 6 && j <= 8) {
+                tabuleiro[i][j] = 1;
+            } else if (i == 8 && j >= 5 && j <= 9) {
+                tabuleiro[i][j] = 1;
+            }
+        }
     }
 
-    for (pos_diagonal = 0; pos_diagonal < 3; pos_diagonal++){
-        tabuleiro[pos_diagonal][pos_diagonal] = representar_navios;
+    // Cruz
+    for (int i = 0; i < LINHAS_TABULEIRO; i++) {
+        for (int j = 0; j < COLUNAS_TABULEIRO; j++) {
+            if (i >= 4 && i <= 8 && j == 2) {
+                tabuleiro[i][j] = 1;
+            } else if (i == 6 && j >= 0 && j <= 4) {
+                tabuleiro[i][j] = 1;
+            }
+        }
     }
-
-    for (pos_diagonal = 1; pos_diagonal < 4; pos_diagonal++) {
-        tabuleiro[pos_diagonal][9-pos_diagonal] = representar_navios;
+    
+    // Octaedro
+    for (int i = 0; i < LINHAS_TABULEIRO; i++) {
+        for (int j = 0; j < COLUNAS_TABULEIRO; j++) {
+            if (i == 0 && j == 7) {
+                tabuleiro[i][j] = 1;
+            } else if (i == 1 && j >= 6 && j <= 8) {
+                tabuleiro[i][j] = 1;
+            } else if (i == 2 && j >= 5 && j <= 9) {
+                tabuleiro[i][j] = 1;
+            } else if (i == 3 && j >= 6 && j <= 8) {
+                tabuleiro[i][j] = 1;
+            } else if (i == 4 && j == 7) {
+                tabuleiro[i][j] = 1;
+            }
+        }
     }
-
 
     // Exibindo letras para identificar colunas
     for (int c = 0; c <= COLUNAS_TABULEIRO; c++) {
@@ -75,27 +116,6 @@ int main() {
     }
 
     printf("-------------------------\n");
-
-    // Nível Mestre - Habilidades Especiais com Matrizes
-    // Sugestão: Crie matrizes para representar habilidades especiais como cone, cruz, e octaedro.
-    // Sugestão: Utilize estruturas de repetição aninhadas para preencher as áreas afetadas por essas habilidades no tabuleiro.
-    // Sugestão: Exiba o tabuleiro com as áreas afetadas, utilizando 0 para áreas não afetadas e 1 para áreas atingidas.
-
-    // Exemplos de exibição das habilidades:
-    // Exemplo para habilidade em cone:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 1 1 1 1 1
-    
-    // Exemplo para habilidade em octaedro:
-    // 0 0 1 0 0
-    // 0 1 1 1 0
-    // 0 0 1 0 0
-
-    // Exemplo para habilidade em cruz:
-    // 0 0 1 0 0
-    // 1 1 1 1 1
-    // 0 0 1 0 0
 
     return 0;
 }
